@@ -1,7 +1,7 @@
 {
-  "name": "babel-plugin-import",
-  "version": "1.8.0",
-  "description": "Component modular import plugin for babel.",
+  "name": "babel-plugin-antd-test-class",
+  "version": "0.1.0",
+  "description": "add test class name for react antd based project.",
   "repository": {
     "type": "git",
     "url": "https://github.com/ant-design/babel-plugin-import"
@@ -10,7 +10,8 @@
   "scripts": {
     "build": "rm -rf lib && babel src --out-dir lib --ignore __tests__",
     "test": "jest",
-    "lint": "eslint --ext .js src"
+    "lint": "eslint --ext .js src",
+    "lint:fix": "eslint --ext .js src --fix"
   },
   "pre-commit": [
     "lint"
@@ -19,6 +20,13 @@
     "babel-plugin",
     "antd"
   ],
+  "jest": {
+    "modulePathIgnorePatterns": [
+      "/test/fixtures/"
+    ],
+    "testEnvironment": "node",
+    "testRegex": "./test/.+\\.js$"
+  },
   "author": "",
   "license": "MIT",
   "devDependencies": {
@@ -28,8 +36,10 @@
     "@babel/preset-react": "^7.0.0",
     "@babel/register": "^7.0.0",
     "babel-core": "^7.0.0-0",
-    "eslint": "^2.7.0",
-    "eslint-config-airbnb": "^6.2.0"
+    "eslint": "^5.6.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "jest": "^23.6.0"
   },
   "files": [
     "lib",
@@ -37,6 +47,7 @@
     "README.md"
   ],
   "dependencies": {
-    "@babel/helper-module-imports": "^7.0.0"
+    "@babel/plugin-syntax-jsx": "^7.0.0",
+    "@babel/types": "^7.0.0"
   }
 }
