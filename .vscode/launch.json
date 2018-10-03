@@ -11,9 +11,15 @@
       "args": [
         "--runInBand", "${fileBasename}"
       ],
+      "runtimeArgs": [
+        "--nolazy",
+        "--require",
+        "babel-register"
+      ],
       "cwd": "${workspaceFolder}",
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
+      "sourceMaps": true,
       "program": "${workspaceFolder}/node_modules/jest/bin/jest"
     },
     {

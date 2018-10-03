@@ -38,8 +38,8 @@ export default function ({ types: t }) { // eslint-disable-line
           );
         }
       },
-      Program(path, state) {
-        console.log(path, state);
+      Program(path, state) { // eslint-disable-line
+        // console.log(path, state);
       }
     }
   };

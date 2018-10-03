@@ -40,7 +40,7 @@ export default function addTestClass(
     if (isJSXExpressionContainer(classNameAttr.value)) {
       const { expression } = classNameAttr.value
       // add test class name for expression
-      classNameAttr.value.expression = binaryExpression('+', classNameAttr.value.expression, stringLiteral(' testClassName'))
+      classNameAttr.value.expression = binaryExpression('+', classNameAttr.value.expression, stringLiteral(' ' + testClassName))
     }
   } else {
     // create class attribute

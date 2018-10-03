@@ -1,6 +1,6 @@
 import { TEST_SYMBOL } from './constant'
 
-export function generateTestClass(
+export default function generateTestClass(
   path,
   state,
   openingElement,
@@ -10,6 +10,8 @@ export function generateTestClass(
 ) {
   const elementName = openingElement.name.name
   if (dataTestAttr && dataTestAttr.value.value) {
+    attributes.splice(attributes.indexOf(dataTestAttr), 1)
     return `${elementName}-${TEST_SYMBOL}-${dataTestAttr.value.value}`
   }
+  return ''
 }
