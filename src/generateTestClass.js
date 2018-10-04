@@ -10,8 +10,9 @@ export default function generateTestClass(
 ) {
   const elementName = openingElement.name.name
   if (dataTestAttr && dataTestAttr.value.value) {
-    attributes.splice(attributes.indexOf(dataTestAttr), 1)
     return `${elementName}-${TEST_SYMBOL}-${dataTestAttr.value.value}`
   }
+  // get test class by getFieldDecorator
+  
   return ''
 }

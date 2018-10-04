@@ -5,4 +5,5 @@ export function genMapByArr(arr) {
       res[keyItem] = keyItem;
     }
   });
+  return res;
 }

@@ -11,11 +11,6 @@
       "args": [
         "--runInBand", "${fileBasename}"
       ],
-      "runtimeArgs": [
-        "--nolazy",
-        "--require",
-        "babel-register"
-      ],
       "cwd": "${workspaceFolder}",
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
