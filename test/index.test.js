@@ -14,13 +14,13 @@ describe('index', () => {
 
     it(`should work with ${caseName}`, () => {
       const actual = transformFileSync(actualFile, {
-        presets: ['react'],
+        presets: ['@babel/preset-react'],
         plugins: [plugin],
       }).code;
 
       // const expected = readFileSync(expectedFile, 'utf-8');
       const expected = transformFileSync(expectedFile, {
-        presets: ['react']
+        presets: ['@babel/preset-react']
       }).code;
       expect(actual.trim()).toEqual(expected.trim());
     });
