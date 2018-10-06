@@ -30,7 +30,7 @@
       "runtimeArgs": [
           "--nolazy",
           "--require",
-          "babel-register"
+          "@babel/register"
       ],
       "env": {
           "NODE_ENV": "development"
