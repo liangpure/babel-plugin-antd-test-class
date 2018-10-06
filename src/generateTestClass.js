@@ -14,8 +14,7 @@ function getSmeanticName(
   state,
   openingElement,
   attributes,
-  dataTestAttr,
-  classNameAttr
+  dataTestAttr
 ) {
   // const elementName = openingElement.name.name
   if (dataTestAttr && dataTestAttr.value.value) {
