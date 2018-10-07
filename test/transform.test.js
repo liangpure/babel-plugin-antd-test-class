@@ -12,7 +12,7 @@ const plugin = function (babel) {
             // console.log(path);
             if (path.isJSXElement()) {
               if (path.node.openingElement.name.name === 'FormItem') {
-                const labelAttr = path.node.openingElement.attributes.find(attribute => {
+                const labelAttr = path.node.openingElement.attributes.find(attribute => { // eslint-disable-line
                   if (t.isJSXAttribute(attribute)) {
                     return attribute.name.name === 'label'
                   }
