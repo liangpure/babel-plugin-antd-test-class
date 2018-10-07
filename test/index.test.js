@@ -1,5 +1,5 @@
 import { transformFileSync } from '@babel/core';
-import babelPluginJsxSyntax from '@babel/plugin-syntax-jsx';
+// import babelPluginJsxSyntax from '@babel/plugin-syntax-jsx';
 import { join } from 'path';
 import { readdirSync } from 'fs';
 import plugin from '../src';
@@ -15,12 +15,13 @@ describe('index', () => {
 
     it(`should work with ${caseName}`, () => {
       const actual = transformFileSync(actualFile, {
+        presets: ['@babel/preset-react'],
         plugins: [plugin],
       }).code;
 
       // const expected = readFileSync(expectedFile, 'utf-8');
       const expected = transformFileSync(expectedFile, {
-        plugins: [babelPluginJsxSyntax]
+        presets: ['@babel/preset-react']
       }).code;
       expect(actual.trim()).toEqual(expected.trim());
     });

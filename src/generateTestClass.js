@@ -4,10 +4,11 @@ import {
   isJSXAttribute,
   isStringLiteral,
   isJSXExpressionContainer,
+  isJSXText,
   isJSXElement
 } from '@babel/types';
 import { TEST_SYMBOL } from './constant'
-import { getNeededNameFromNode } from './helpers';
+import { getReactIntlMessageName, getNeededNameFromNode } from './helpers';
 
 function getSmeanticName(
   path,
@@ -70,22 +71,23 @@ function getSmeanticName(
           return labelAttr.value.value
         }
         if (isJSXExpressionContainer(labelAttr.value)) {
-          // when use preset-react@7.0, the <FormattedMessage /> has been transformed to function,
-          // It's not right.
-          // https://astexplorer.net/#/gist/d8ef99d64d0596a81878d0ba0696a38b/d63d527e29f163fe1f8a154720e5742dcff22c2a
-          // work right in the astexpolorer
-          if (isJSXElement(labelAttr.value.expression)) {
-            return getNeededNameFromNode(labelAttr.value.expression)
-          }
-          if (isCallExpression(labelAttr.value.expression)) {
-            if (isIdentifier(labelAttr.value.expression.callee)) {
-              if (labelAttr.value.expression.callee.name === 'formatMessage') {
-                return getNeededNameFromNode(labelAttr.value.expression.arguments[0])
-              }
-            }
-          }
+          return getReactIntlMessageName(labelAttr.value.expression)
         }
       }
+    }
+  }
+  // if element is Button, find its children
+  if (openingElement.name.name === 'Button') {
+    if (isJSXExpressionContainer(path.node.children[0])) {
+      const res = getReactIntlMessageName(path.node.children[0].expression);
+      if (res) return res;
+    }
+    if (isJSXText(path.node.children[0])) {
+      return path.node.children[0].value
+    }
+    if (isJSXElement(path.node.children[0])) {
+      const res = getReactIntlMessageName(path.node.children[0]);
+      if (res) return res;
     }
   }
   return ''

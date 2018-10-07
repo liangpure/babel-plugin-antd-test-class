@@ -33,7 +33,7 @@ export default function addTestClass(
     dataTestAttr,
     classNameAttr
   )
-  if (classNameAttr) {
+  if (classNameAttr && testClassName) {
     if (isStringLiteral(classNameAttr.value)) {
       classNameAttr.value.value = `${classNameAttr.value.value} ${testClassName}`;
     }
@@ -42,7 +42,7 @@ export default function addTestClass(
       // add test class name for expression
       classNameAttr.value.expression = binaryExpression('+', classNameAttr.value.expression, stringLiteral(' ' + testClassName))
     }
-  } else {
+  } else if (testClassName) {
     // create class attribute
     attributes.push(jSXAttribute(jSXIdentifier('className'), stringLiteral(testClassName)))
   }
