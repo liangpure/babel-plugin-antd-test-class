@@ -18,7 +18,7 @@ function getSmeanticName(
   dataTestAttr
 ) {
   // const elementName = openingElement.name.name
-  if (dataTestAttr && dataTestAttr.value.value) {
+  if (dataTestAttr && isStringLiteral(dataTestAttr.value)) {
     return dataTestAttr.value.value
   }
   // find name attribute
