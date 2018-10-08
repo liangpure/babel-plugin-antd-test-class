@@ -5,7 +5,12 @@ import {
   isJSXElement,
   isJSXAttribute,
   isJSXSpreadAttribute,
-  isCallExpression
+  isCallExpression,
+  isImportSpecifier,
+  isImportDeclaration,
+  isImportDefaultSpecifier,
+  isObjectExpression,
+  isArrayExpression
 } from '@babel/types';
 
 export function genMapByArr(arr) {
@@ -81,4 +86,50 @@ export function getReactIntlMessageName(node) {
     }
   }
   return res;
+}
+
+export function isImportedX(programPath, importedName) {
+  return programPath.node.body.some((item) => {
+    if (isImportDeclaration(item)) {
+      return Array.isArray(item.specifiers) && item.specifiers.find((innerItem) => {
+        return (
+          isImportSpecifier(innerItem)
+          && isIdentifier(innerItem.imported)
+          && innerItem.imported.name === importedName
+        )
+      })
+    }
+    if (isImportDefaultSpecifier(item)) {
+      if (isIdentifier(item.local)) {
+        return item.local.name === importedName;
+      }
+    }
+    return false
+  })
+}
+
+export function isColumnObjectExpression(node) {
+  const temp = {}
+  if (isObjectExpression(node)) {
+    node.properties.forEach((item) => {
+      const propertyName = getNeededNameFromNode(item.key)
+      if (propertyName === 'title' || propertyName === 'dataIndex') {
+        temp[propertyName] = item
+      }
+    })
+  }
+  return {
+    isColumn: temp.title && temp.dataIndex,
+    columnProperties: temp
+  }
+}
+export function isColumnsNeedAddClassName(identifierName, node) {
+  return isArrayExpression(node)
+    && isObjectExpression(node.elements[0])
+    && isColumnObjectExpression(node.elements[0]).isColumn
+    && identifierName && identifierName.indexOf('columns') > -1
+}
+
+export function generateColTestClass(name) {
+  return `col-autotest-${name}`
 }
