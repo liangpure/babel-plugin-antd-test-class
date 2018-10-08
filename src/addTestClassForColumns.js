@@ -1,11 +1,14 @@
 import {
   isObjectProperty,
   isStringLiteral,
-  isExpressionStatement,
   binaryExpression,
   stringLiteral,
   objectProperty,
-  identifier
+  identifier,
+  isLogicalExpression,
+  isConditionalExpression,
+  isCallExpression,
+  isBinaryExpression
 } from '@babel/types';
 import { isColumnObjectExpression, getNeededNameFromNode, generateColTestClass } from './helpers';
 
@@ -19,11 +22,14 @@ export default function addTestClassForColumns(path, state, columnArrayExpressio
       const dataIndexValue = getNeededNameFromNode(columnProperties.dataIndex.value)
       if (classProperty && dataIndexValue) {
         if (isStringLiteral(classProperty.value)) {
-          if (dataIndexValue) {
-            classProperty.value = classProperty.value + ` ${generateColTestClass(dataIndexValue)}` // eslint-disable-line
-          }
+          classProperty.value.value = classProperty.value.value + ` ${generateColTestClass(dataIndexValue)}` // eslint-disable-line
         }
-        if (isExpressionStatement(classProperty.value)) {
+        if (
+          isLogicalExpression(classProperty.value)
+          || isConditionalExpression(classProperty.value)
+          || isCallExpression(classProperty.value)
+          || isBinaryExpression(classProperty.value)
+        ) {
           classProperty.value = binaryExpression('+', classProperty.value, stringLiteral(' ' + generateColTestClass(dataIndexValue)))
         }
       } else if (dataIndexValue) {

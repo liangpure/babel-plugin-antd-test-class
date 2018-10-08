@@ -7,7 +7,11 @@ const columns = [{
 }, {
   title: 'money',
   dataIndex: 'money',
-  className: "col-autotest-money"
+  className: "exist-class col-autotest-money"
+}, {
+  title: 'condition',
+  dataIndex: 'condition',
+  className: (isActive && 'active') + " col-autotest-condition"
 }]
 const column = 'test';
 const cols = function() {}

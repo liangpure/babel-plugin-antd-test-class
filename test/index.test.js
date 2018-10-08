@@ -1,5 +1,4 @@
 import { transformFileSync } from '@babel/core';
-// import babelPluginJsxSyntax from '@babel/plugin-syntax-jsx';
 import { join } from 'path';
 import { readdirSync } from 'fs';
 import plugin from '../src';

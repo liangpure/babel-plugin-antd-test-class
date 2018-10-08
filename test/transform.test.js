@@ -1,6 +1,7 @@
 import { transformSync } from '@babel/core';
 import babelPluginJsxSyntax from '@babel/plugin-syntax-jsx';
 
+let isJSXElement;
 const plugin = function (babel) {
   const { types: t } = babel;
   return {
@@ -17,7 +18,9 @@ const plugin = function (babel) {
                     return attribute.name.name === 'label'
                   }
                 })
-                console.log('labelAttr labelAttr', t.isJSXElement(labelAttr.value.expression), labelAttr.value.expression)
+                isJSXElement = t.isJSXElement(labelAttr.value.expression);
+                // console.log('labelAttr labelAttr',
+                // t.isJSXElement(labelAttr.value.expression), labelAttr.value.expression)
                 return true;
               }
               return false
@@ -30,7 +33,7 @@ const plugin = function (babel) {
   };
 }
 
-const actual = transformSync(`
+transformSync(`
 const test = (
   <FormItem
    colon={false}
@@ -42,4 +45,7 @@ const test = (
 `, {
   plugins: [plugin, '@babel/plugin-transform-react-jsx']
 })
-console.log('actual actual actual', actual.code)
+test('babel transform work right, expect labelAttr.value.expression is JSXElement', () => {
+  // this maybe is plugin-transform-react-jsx bug.
+  expect(!isJSXElement).toBe(true)
+})

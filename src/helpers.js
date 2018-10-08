@@ -119,7 +119,7 @@ export function isColumnObjectExpression(node) {
     })
   }
   return {
-    isColumn: temp.title && temp.dataIndex,
+    isColumn: Boolean(temp.title && temp.dataIndex),
     columnProperties: temp
   }
 }

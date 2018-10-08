@@ -5,7 +5,12 @@ const columns = [{
   dataIndex: 'id'
 }, {
   title: 'money',
-  dataIndex: 'money'
+  dataIndex: 'money',
+  className: 'exist-class'
+}, {
+  title: 'condition',
+  dataIndex: 'condition',
+  className: isActive && 'active'
 }]
 const column = 'test';
 const cols = function() {}
