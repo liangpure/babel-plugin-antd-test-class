@@ -4,7 +4,8 @@ import {
   isExpressionStatement,
   binaryExpression,
   stringLiteral,
-  objectProperty
+  objectProperty,
+  identifier
 } from '@babel/types';
 import { isColumnObjectExpression, getNeededNameFromNode, generateColTestClass } from './helpers';
 
@@ -26,7 +27,7 @@ export default function addTestClassForColumns(path, state, columnArrayExpressio
           classProperty.value = binaryExpression('+', classProperty.value, stringLiteral(' ' + generateColTestClass(dataIndexValue)))
         }
       } else if (dataIndexValue) {
-        item.properties.push(objectProperty('className', generateColTestClass(dataIndexValue)))
+        item.properties.push(objectProperty(identifier('className'), stringLiteral(generateColTestClass(dataIndexValue))))
       }
     }
   })
