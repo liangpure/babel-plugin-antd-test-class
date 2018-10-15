@@ -26,4 +26,15 @@ const element = (<div>
   <FormItem {...label10Layout} label={formatMessage(Lang.requestNo)}>
     <Input />
   </FormItem>
+  <FormItem
+    colon={false}
+    label={<FormattedMessage {...messages.revSkuNo} />}
+    {...label8Layout}
+  >
+    {
+      getFieldDecorator(formFieldMap.revSkuNo)(
+        <Input />
+      )
+    }
+  </FormItem>
 </div>)

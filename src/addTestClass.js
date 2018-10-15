@@ -10,7 +10,9 @@ import {
   jSXExpressionContainer,
   jSXIdentifier,
   stringLiteral,
-  parenthesizedExpression
+  parenthesizedExpression,
+  isJSXAttribute,
+  isJSXIdentifier
 } from '@babel/types';
 // https://babeljs.io/docs/en/babel-types#logicalexpression
 import generateTestClass from './generateTestClass'
@@ -22,8 +24,11 @@ export default function addTestClass(
   attributes,
   dataTestAttr
 ) {
-  let classNameAttr = attributes.find((item) => {
-    return item.name.name === 'className'
+  let classNameAttr = attributes.find((attribute) => {
+    if (isJSXAttribute(attribute) && isJSXIdentifier(attribute.name)) {
+      return attribute.name.name === 'className'
+    }
+    return false
   })
   const testClassName = generateTestClass(
     path,

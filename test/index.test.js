@@ -6,7 +6,7 @@ import plugin from '../src';
 describe('index', () => {
   const fixturesDir = join(__dirname, 'fixtures');
   let fixtures = readdirSync(fixturesDir);
-  fixtures = fixtures.filter(caseName => caseName.indexOf('FormItem33') === -1)
+  fixtures = fixtures.filter(caseName => caseName.indexOf('no-test') === -1)
   fixtures.map(caseName => {
     const fixtureDir = join(fixturesDir, caseName);
     const actualFile = join(fixtureDir, 'actual.js');

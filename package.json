@@ -8,7 +8,7 @@
   },
   "main": "lib/index.js",
   "scripts": {
-    "build": "rm -rf lib && babel src --out-dir lib --ignore test",
+    "build": "babel src --out-dir lib --ignore test",
     "test": "jest",
     "lint": "eslint --ext .js src",
     "lint:fix": "eslint --ext .js src --fix"

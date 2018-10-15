@@ -4,8 +4,7 @@ import {
   isJSXAttribute,
   isStringLiteral,
   isJSXExpressionContainer,
-  isJSXText,
-  isJSXElement
+  isJSXIdentifier
 } from '@babel/types';
 import { TEST_SYMBOL } from './constant'
 import { getReactIntlMessageName, getNeededNameFromNode } from './helpers';
@@ -23,7 +22,10 @@ function getSmeanticName(
   }
   // find name attribute
   const nameAttr = attributes.find((attribute) => {
-    return isJSXAttribute(attribute) && attribute.name.name === 'name'
+    if (isJSXAttribute(attribute) && isJSXIdentifier(attribute.name)) {
+      return attribute.name.name === 'name'
+    }
+    return false
   })
   if (nameAttr && isStringLiteral(nameAttr.value)) {
     return nameAttr.value.value
@@ -77,19 +79,19 @@ function getSmeanticName(
     }
   }
   // if element is Button, find its children
-  if (openingElement.name.name === 'Button') {
-    if (isJSXExpressionContainer(path.node.children[0])) {
-      const res = getReactIntlMessageName(path.node.children[0].expression);
-      if (res) return res;
-    }
-    if (isJSXText(path.node.children[0])) {
-      return path.node.children[0].value
-    }
-    if (isJSXElement(path.node.children[0])) {
-      const res = getReactIntlMessageName(path.node.children[0]);
-      if (res) return res;
-    }
-  }
+  // if (openingElement.name.name === 'Button') {
+  //   if (isJSXExpressionContainer(path.node.children[0])) {
+  //     const res = getReactIntlMessageName(path.node.children[0].expression);
+  //     if (res) return res;
+  //   }
+  //   if (isJSXText(path.node.children[0])) {
+  //     return path.node.children[0].value
+  //   }
+  //   if (isJSXElement(path.node.children[0])) {
+  //     const res = getReactIntlMessageName(path.node.children[0]);
+  //     if (res) return res;
+  //   }
+  // }
   return ''
 }
 
