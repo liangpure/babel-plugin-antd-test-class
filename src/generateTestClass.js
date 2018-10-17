@@ -4,7 +4,9 @@ import {
   isJSXAttribute,
   isStringLiteral,
   isJSXExpressionContainer,
-  isJSXIdentifier
+  isJSXIdentifier,
+  isJSXText,
+  isJSXElement
 } from '@babel/types';
 import { TEST_SYMBOL } from './constant'
 import { getReactIntlMessageName, getNeededNameFromNode } from './helpers';
@@ -78,20 +80,20 @@ function getSmeanticName(
       }
     }
   }
-  // if element is Button, find its children
-  // if (openingElement.name.name === 'Button') {
-  //   if (isJSXExpressionContainer(path.node.children[0])) {
-  //     const res = getReactIntlMessageName(path.node.children[0].expression);
-  //     if (res) return res;
-  //   }
-  //   if (isJSXText(path.node.children[0])) {
-  //     return path.node.children[0].value
-  //   }
-  //   if (isJSXElement(path.node.children[0])) {
-  //     const res = getReactIntlMessageName(path.node.children[0]);
-  //     if (res) return res;
-  //   }
-  // }
+  // if element is Button, find its first children
+  if (openingElement.name.name === 'Button') {
+    if (isJSXExpressionContainer(path.node.children[0])) {
+      const res = getReactIntlMessageName(path.node.children[0].expression);
+      if (res) return res;
+    }
+    if (isJSXText(path.node.children[0]) && path.node.children[0].value.trim().length > 0) {
+      return path.node.children[0].value
+    }
+    if (isJSXElement(path.node.children[0])) {
+      const res = getReactIntlMessageName(path.node.children[0]);
+      if (res) return res;
+    }
+  }
   return ''
 }
 
